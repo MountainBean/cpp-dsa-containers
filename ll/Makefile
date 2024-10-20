@@ -1,6 +1,6 @@
 CC = clang++
 
-ARGS =
+ARGS = -g
 
 TARGET = ll
 

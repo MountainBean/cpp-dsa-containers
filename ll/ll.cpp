@@ -224,6 +224,17 @@ public:
         tail = head;
         head = before;
     }
+
+    //! Finds and returns the middle Node in the List.
+    Node* middle() {
+        Node* tortoise {head};
+        Node* hare {head};
+        while (hare && hare->next) {
+            hare = hare->next->next;
+            tortoise = tortoise->next;
+        }
+        return tortoise;
+    }
 };
 
 
@@ -235,12 +246,14 @@ int main(void) {
     myLinkedList->append(7);
     myLinkedList->append(8);
     myLinkedList->append(9);
+    myLinkedList->append(10);
+    myLinkedList->append(11);
+    myLinkedList->append(12);
     
     
     myLinkedList->printList();
     cout << endl;
-    myLinkedList->reverse();
-    myLinkedList->printList();
+    cout << "middle: " << myLinkedList->middle()->value << endl;
     return(0);
     
 }
