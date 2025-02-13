@@ -1,6 +1,6 @@
 CC = clang++
 
-ARGS = -g
+ARGS = -std=c++20 -pedantic-errors -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -g
 
 TARGET = ll
 

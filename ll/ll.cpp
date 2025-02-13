@@ -1,7 +1,5 @@
 #include <iostream>
 
-using namespace std;
-
 //! (Singly) Linked List Node Class.
 
 class Node {
@@ -54,24 +52,24 @@ public:
     void printList() {
         Node* temp {head};
         while(temp) {
-            cout << temp->value << endl;
+            std::cout << temp->value << "\n";
             temp = temp->next;
         }
     }
 
     //! Returns the int value of the Node at the head of the List.
     void getHead() {
-        cout << "Head: " << head->value << endl;
+        std::cout << "Head: " << head->value << "\n";
     }
 
     //! Returns the int value of the Node at the tail of the List.
     void getTail() {
-        cout << "Tail: " << tail->value << endl;
+        std::cout << "Tail: " << tail->value <<  "\n";
     }
 
     //! Returns the total number of Nodes in the List.
     void getLength() {
-        cout << "Length: " << length << endl;
+        std::cout << "Length: " << length << "\n";
     }
 
     //! Adds the given value to the end of the List in a Node.
@@ -252,8 +250,8 @@ int main(void) {
     
     
     myLinkedList->printList();
-    cout << endl;
-    cout << "middle: " << myLinkedList->middle()->value << endl;
+    std::cout << "\n";
+    std::cout << "middle: " << myLinkedList->middle()->value << "\n";
     return(0);
     
 }
