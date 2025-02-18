@@ -17,7 +17,7 @@
 template <typename T>
 struct Node {
 
-    T value {};             // some object of any type
+    const T value {};             // some object of any type
     Node* next {nullptr};   // null pointer which will point to the next node
 
 };
@@ -26,19 +26,16 @@ struct Node {
 
 template <typename T>
 class LinkedList {
-
-private:
-    Node<T>* m_head {nullptr};      // pointer to the first Node in the Linked List.
-    Node<T>* m_tail {nullptr};      // pointer to the last Node in the Linked List.
-    int m_length;                   // The length of the Linked List.
-
 public:
-    //! Constructor method. Initialises the list with the given object as the 1st item
-    LinkedList(T value){
-        Node<T>* newNode = new Node {value};
-        m_head = newNode;
-        m_tail = newNode;
-        m_length = 1;
+    //! Constructor method. 
+    /* Initialises the list using member initialisation list with the given 
+     * object (value) as the 1st item.
+     */
+    LinkedList(T value) 
+        : m_head {new Node{value}}
+        , m_tail {m_head}
+        , m_length {1}
+    {
     }
 
     //! Destructor method. Iterates along the list, releasing each Node from memory.
@@ -56,7 +53,7 @@ public:
     //! prints the linked list items. One item per line.
     /*! O(n). This method iterates through each member of of the list making it O(n) 
      * where n = the number of Nodes in the list. */
-    void printList() {
+    void printList() const {
         Node<T>* temp {m_head};
         while(temp) {
             std::cout << temp->value << "\n";
@@ -64,18 +61,18 @@ public:
         }
     }
 
-    //! Returns the int value of the Node at the head of the List.
-    T getHead() {
-        return m_head->value;
+    //! Returns the Node at the head of the List.
+    Node<T>* getHead() const {
+        return m_head;
     }
 
-    //! Returns the int value of the Node at the tail of the List.
-    T getTail() {
-        return m_tail->value;
+    //! Returns the Node at the tail of the List.
+    Node<T>* getTail() const {
+        return m_tail;
     }
 
     //! Returns the total number of Nodes in the List.
-    T getLength() {
+    T getLength() const {
         return m_length;
     }
 
@@ -156,7 +153,7 @@ public:
     /*! O(n). Iterates through the list until it reaches the index of the requested
      * Node making it O(n) where n = index.
      */
-    Node<T>* get(int index){
+    Node<T>* get(int index) const {
         if (index < 0 || index >= m_length) {
             return nullptr;
         }
@@ -249,6 +246,12 @@ public:
         }
         return tortoise;
     }
+
+private:
+    Node<T>* m_head {nullptr};      // pointer to the first Node in the Linked List.
+    Node<T>* m_tail {nullptr};      // pointer to the last Node in the Linked List.
+    int m_length;                   // The length of the Linked List.
+
 };
 
 
