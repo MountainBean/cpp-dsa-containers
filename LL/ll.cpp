@@ -1,29 +1,41 @@
+/* Linked List (Class Template)
+ * Samuel Drew ~ 2025 
+ * ---
+ *  This is a simple implementation of a Linked List.
+ *  Class templating is used to allow the creation of Linked Lists of any 
+ *  object type. This version used CTAD (Class Type Argument Deduction) 
+ *  and doesn't provide deduction guides so will only compile with C++20 or
+ *  newer.
+ */
+
 #include <iostream>
+#include <string>
 
 //! (Singly) Linked list node struct
-/*! Simple data aggregate to hold each node in a linked list
- */
+/*! Templated data aggregate to hold each node in a linked list
+*/
+template <typename T>
 struct Node {
 
-    int value {};           // an integer value
+    T value {};             // some object of any type
     Node* next {nullptr};   // null pointer which will point to the next node
 
 };
 
-//! Simple implementation of a linked list using standard C++
+//! Templated implementation of a linked list using standard C++
 
+template <typename T>
 class LinkedList {
 
 private:
-    Node* m_head {nullptr};       /*! pointer to the first Node in the Linked List. */
-    Node* m_tail {nullptr};       /*! pointer to the last Node in the Linked List. */
-    int m_length;                 /*! The length of the Linked List. DON'T FORGET TO UPDATE
-                                    THIS IN MEMBER FUNCTIONS. */
+    Node<T>* m_head {nullptr};      // pointer to the first Node in the Linked List.
+    Node<T>* m_tail {nullptr};      // pointer to the last Node in the Linked List.
+    int m_length;                   // The length of the Linked List.
 
 public:
-    //! Constructor method. Initialises the List with a Node containing the given integer.
-    LinkedList(int value){
-        Node* newNode = new Node {value};
+    //! Constructor method. Initialises the list with the given object as the 1st item
+    LinkedList(T value){
+        Node<T>* newNode = new Node {value};
         m_head = newNode;
         m_tail = newNode;
         m_length = 1;
@@ -33,7 +45,7 @@ public:
     /*! O(n). This method iterates through each member of of the list making it O(n) 
      * where n = the number of Nodes in the list. */
     ~LinkedList(){
-        Node* temp {m_head};
+        Node<T>* temp {m_head};
         while(m_head){
             m_head = m_head->next;
             delete temp;
@@ -45,7 +57,7 @@ public:
     /*! O(n). This method iterates through each member of of the list making it O(n) 
      * where n = the number of Nodes in the list. */
     void printList() {
-        Node* temp {m_head};
+        Node<T>* temp {m_head};
         while(temp) {
             std::cout << temp->value << "\n";
             temp = temp->next;
@@ -53,17 +65,17 @@ public:
     }
 
     //! Returns the int value of the Node at the head of the List.
-    int getHead() {
+    T getHead() {
         return m_head->value;
     }
 
     //! Returns the int value of the Node at the tail of the List.
-    int getTail() {
+    T getTail() {
         return m_tail->value;
     }
 
     //! Returns the total number of Nodes in the List.
-    int getLength() {
+    T getLength() {
         return m_length;
     }
 
@@ -72,8 +84,8 @@ public:
      * List. No iteration is needed so complexity is constant, regardless of the 
      * length of the List.
      */
-    bool append(int value) {
-        Node* newNode = new Node {value};
+    bool append(T value) {
+        Node<T>* newNode = new Node {value};
         if (m_length == 0){
             m_head = newNode;
             m_tail = newNode;
@@ -93,7 +105,7 @@ public:
      */
     void deleteLast(){
         if (m_length == 0 ) return;
-        Node* temp {m_head};
+        Node<T>* temp {m_head};
         if (m_length == 1 ) {
             m_head = nullptr;
             m_tail = nullptr;
@@ -116,7 +128,7 @@ public:
      */
     void deleteFirst(){
         if (m_length == 0 ) return;
-        Node* temp {m_head};
+        Node<T>* temp {m_head};
         if (m_length == 1 ) {
             m_head = nullptr;
             m_tail = nullptr;
@@ -132,8 +144,8 @@ public:
      * List. No iteration is needed so complexity is constant, regardless of the 
      * length of the List. 
      */
-    void prepend(int value){
-        Node* newNode = new Node {value};
+    void prepend(T value){
+        Node<T>* newNode = new Node {value};
         newNode->next = m_head;
         m_head = newNode;
         if (m_length == 0) m_tail = newNode;
@@ -144,11 +156,11 @@ public:
     /*! O(n). Iterates through the list until it reaches the index of the requested
      * Node making it O(n) where n = index.
      */
-    Node* get(int index){
+    Node<T>* get(int index){
         if (index < 0 || index >= m_length) {
             return nullptr;
         }
-        Node* temp {m_head};
+        Node<T>* temp {m_head};
         for (int i {0}; i < index; i++){
             temp = temp->next;
         }
@@ -160,7 +172,7 @@ public:
      * Node making it O(n) where n = index.
      */
     bool set(int index, int value){
-        Node* temp = get(index);
+        Node<T>* temp = get(index);
         if (temp) {
             temp->value = value;
             return true;
@@ -172,7 +184,7 @@ public:
     /*! O(n). Iterates through the list until it reaches the index of the requested
      * Node making it O(n) where n = index.
      */
-    bool insert(int index, int value){
+    bool insert(int index, T value){
         if (index < 0 || index > m_length) return false;
         if (index == 0) {
             prepend(value);
@@ -183,8 +195,8 @@ public:
             return true;
         }
 
-        Node* newNode = new Node {value};
-        Node* temp {get(index-1)};
+        Node<T>* newNode = new Node {value};
+        Node<T>* temp {get(index-1)};
 
         newNode->next = temp->next;
         temp->next = newNode;
@@ -201,8 +213,8 @@ public:
         if ( index == 0 ) deleteFirst();
         if ( index == m_length-1 ) deleteLast();
 
-        Node* prev {get(index-1)};
-        Node* temp {prev->next};
+        Node<T>* prev {get(index-1)};
+        Node<T>* temp {prev->next};
 
         prev->next = temp->next;
         delete temp;
@@ -214,9 +226,9 @@ public:
      * n = length of the List.
      */
     void reverse() {
-        Node* temp {m_head};
-        Node* after {m_head};
-        Node* before {nullptr};
+        Node<T>* temp {m_head};
+        Node<T>* after {m_head};
+        Node<T>* before {nullptr};
         for (int i {0}; i < m_length; i++){
             after = temp->next;
             temp->next = before;
@@ -228,9 +240,9 @@ public:
     }
 
     //! Finds and returns the middle Node in the List.
-    Node* middle() {
-        Node* tortoise {m_head};
-        Node* hare {m_head};
+    Node<T>* middle() {
+        Node<T>* tortoise {m_head};
+        Node<T>* hare {m_head};
         while (hare && hare->next) {
             hare = hare->next->next;
             tortoise = tortoise->next;
@@ -241,21 +253,38 @@ public:
 
 
 int main(void) {
+
+    using namespace std::string_literals; // easy access to the s suffix
+
+    LinkedList listOfStrings {LinkedList("first string"s)};
+    listOfStrings.append("this is another"s);
+    listOfStrings.append("more"s);
+    listOfStrings.append("implicit from c-style");
+    listOfStrings.append("Lots of strings"s);
+    listOfStrings.append("just so many"s);
+    listOfStrings.append("final string"s);
     
-    LinkedList* myLinkedList = new LinkedList(4);
-    myLinkedList->append(5);
-    myLinkedList->append(6);
-    myLinkedList->append(7);
-    myLinkedList->append(8);
-    myLinkedList->append(9);
-    myLinkedList->append(10);
-    myLinkedList->append(11);
-    myLinkedList->append(12);
-    
-    
-    myLinkedList->printList();
+    listOfStrings.printList();
     std::cout << "\n";
-    std::cout << "middle: " << myLinkedList->middle()->value << "\n";
+    std::cout << "middle: " << listOfStrings.middle()->value << "\n";
+    std::cout << "\n";
+    std::cout << "\n";
+
+
+    LinkedList listOfInts {LinkedList(80)};
+    listOfInts.append(81);
+    listOfInts.prepend(82);
+    listOfInts.prepend(83);
+    listOfInts.insert(3, 84);
+    listOfInts.append(85);
+    listOfInts.append(86);
+    listOfInts.insert(7, 87);
+
+    listOfInts.printList();
+    std::cout << "\n";
+    std::cout << "middle: " << listOfInts.middle()->value << "\n";
+
+
     return(0);
     
 }
