@@ -31,7 +31,7 @@ public:
     /* Initialises the list using member initialisation list with the given 
      * object (value) as the 1st item.
      */
-    LinkedList(T value) 
+    explicit LinkedList(T value) 
         : m_head    {new Node{value}}
         , m_tail    {m_head}
         , m_length  {1}

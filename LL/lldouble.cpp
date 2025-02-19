@@ -28,7 +28,7 @@ template <typename T>
 class DoublyLinkedList {
 public:
     
-    DoublyLinkedList(T value)
+    explicit DoublyLinkedList(T value)
         : m_head    { new DoubleNode{value} }
         , m_tail    { m_head }
         , m_length  { 1 }
