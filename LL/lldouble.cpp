@@ -52,6 +52,6 @@ private:
 int main (void) {
 
     std::cout << "Doubly Linked Lists running...\n";
-    DoublyLinkedList myDList {DoublyLinkedList(3)};
+    DoublyLinkedList myDList {3};
     myDList.printList();
 }

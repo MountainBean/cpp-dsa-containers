@@ -259,7 +259,7 @@ int main(void) {
 
     using namespace std::string_literals; // easy access to the s suffix
 
-    LinkedList listOfStrings {LinkedList{"first string"s}};
+    LinkedList listOfStrings {"first string"s};
     listOfStrings.append("this is another"s);
     listOfStrings.append("more"s);
     listOfStrings.append("implicit from c-style");
@@ -274,7 +274,7 @@ int main(void) {
     std::cout << "\n";
 
 
-    LinkedList listOfInts {LinkedList {80}};
+    LinkedList listOfInts {80};
     listOfInts.append(81);
     listOfInts.prepend(82);
     listOfInts.prepend(83);
