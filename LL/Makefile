@@ -2,13 +2,10 @@ CC = clang++
 
 ARGS = -std=c++20 -pedantic-errors -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -g
 
-TARGET = ll
+all: ll lldouble
 
-SRCS = ll.cpp
+ll lldouble: $^
+	$(CC) "$@.cpp" $(ARGS) -o "$@"
 
-
-all: $(TARGET)
-
-$(TARGET): $(SRCS)
-	$(CC) $(ARGS) -o $(TARGET) $(SRCS)
-
+clean:
+	rm -f ll lldouble

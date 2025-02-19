@@ -17,8 +17,8 @@
 template <typename T>
 struct Node {
 
-    const T value {};             // some object of any type
-    Node* next {nullptr};   // null pointer which will point to the next node
+    T value     {};             // some object of any type
+    Node* next  {nullptr};   // null pointer which will point to the next node
 
 };
 
@@ -32,9 +32,9 @@ public:
      * object (value) as the 1st item.
      */
     LinkedList(T value) 
-        : m_head {new Node{value}}
-        , m_tail {m_head}
-        , m_length {1}
+        : m_head    {new Node{value}}
+        , m_tail    {m_head}
+        , m_length  {1}
     {
     }
 
@@ -168,7 +168,7 @@ public:
     /*! O(n). Iterates through the list until it reaches the index of the requested
      * Node making it O(n) where n = index.
      */
-    bool set(int index, int value){
+    bool set(int index, T value){
         Node<T>* temp = get(index);
         if (temp) {
             temp->value = value;
@@ -250,7 +250,7 @@ public:
 private:
     Node<T>* m_head {nullptr};      // pointer to the first Node in the Linked List.
     Node<T>* m_tail {nullptr};      // pointer to the last Node in the Linked List.
-    int m_length;                   // The length of the Linked List.
+    int m_length {};                   // The length of the Linked List.
 
 };
 
@@ -259,7 +259,7 @@ int main(void) {
 
     using namespace std::string_literals; // easy access to the s suffix
 
-    LinkedList listOfStrings {LinkedList("first string"s)};
+    LinkedList listOfStrings {LinkedList{"first string"s}};
     listOfStrings.append("this is another"s);
     listOfStrings.append("more"s);
     listOfStrings.append("implicit from c-style");
@@ -274,7 +274,7 @@ int main(void) {
     std::cout << "\n";
 
 
-    LinkedList listOfInts {LinkedList(80)};
+    LinkedList listOfInts {LinkedList {80}};
     listOfInts.append(81);
     listOfInts.prepend(82);
     listOfInts.prepend(83);
