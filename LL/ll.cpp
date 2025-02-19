@@ -285,7 +285,7 @@ int main(void) {
 
     listOfInts.printList();
     std::cout << "\n";
-    std::cout << "middle: " << listOfInts.middle()->value << "\n";
+    std::cout << "middle: "s << listOfInts.middle()->value << "\n";
 
 
     return(0);
