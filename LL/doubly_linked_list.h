@@ -193,7 +193,7 @@ DoublyLinkedList<T>::Node* DoublyLinkedList<T>::get(int index){
         return temp;
     } else {
         Node* temp {m_tail};
-        while ((m_length - index) > 0) {
+        while (index < (m_length - 1)) {
             temp = temp -> prev;
             ++index;
         }
@@ -203,12 +203,33 @@ DoublyLinkedList<T>::Node* DoublyLinkedList<T>::get(int index){
 
 template <typename T>
 bool DoublyLinkedList<T>::setValue(int index, const T& value){
-    std::cout << "Not implemented\n";
+    if (index < 0 || index >= m_length) {
+        return false;
+    }
+    Node* temp {get(index)};
+    temp -> value = value;
+    return true;
 }
 
 template <typename T>
 bool DoublyLinkedList<T>::insert(int index, const T& value){
-    std::cout << "Not implemented\n";
+    if (index < 0 || index >= m_length) {
+        return false;
+    }
+    if (index == 0) {
+        return prepend(value);
+    }
+    if (index == m_length) {
+        return append(value);
+    }
+    Node* temp {get(index)};
+    Node* newNode {new Node {value}};
+    newNode -> prev = temp -> prev;
+    newNode -> next = temp;
+    temp -> prev -> next = newNode;
+    temp -> prev = newNode;
+    ++m_length;
+    return true;
 }
 
 template <typename T>
