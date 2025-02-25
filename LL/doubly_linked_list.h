@@ -3,7 +3,12 @@
 /* Sam Drew ~ 2025
  * Doubly Linked List implementation in C++
  * ---
- *  This is a simple implementation of a Doubly Linked List.
+ *  This is a simple implementation of a Doubly Linked List. Written by me, 
+ *  for my own edification in data structures and algorithms and C++.
+ *
+ *  WARNING: Do not use this library in projects. Instead use the standard C++
+ *  std::list.
+ *
  *  Class templating is used to allow the creation of Linked Lists of any 
  *  object type. This version uses CTAD (Class Type Argument Deduction) 
  *  and doesn't provide deduction guides so will only compile with C++20 or
@@ -12,8 +17,8 @@
 
 #include <iostream>
 
-//! Doubly Linked List template.
-/*  Holds a single object type in a doubly linked list of one or more objects
+/* Doubly Linked List template class.
+ *  Holds a single object type in a doubly linked list of one or more objects
  *  (homogenous).
  *  Initialise with an object to create the first node of the list.
  *  Use the included member functions to add to, remove from and search the 
@@ -23,7 +28,11 @@
  *      DoublyLinkedList myList {3};    // myList: [3]
  *      myList.append(4);               // myList: [3, 4]
  *      myList.prepend(2);              // myList: [2, 3, 4]
- *      myList.set(0, 1);               // myList: {1, 3, 4]
+ *      myList.set(0, 1);               // myList: [1, 3, 4]
+ *
+ *  NOTE: This is already implemented in the standard C++ library as the 
+ *  std::list container. Prefer to use the standard container for all 
+ *  collaborative work. 
  */
 template <typename T>
 class DoublyLinkedList {
@@ -223,9 +232,7 @@ bool DoublyLinkedList<T>::insert(int index, const T& value){
         return append(value);
     }
     Node* temp {get(index)};
-    Node* newNode {new Node {value}};
-    newNode -> prev = temp -> prev;
-    newNode -> next = temp;
+    Node* newNode {new Node {value, temp, temp -> prev}};
     temp -> prev -> next = newNode;
     temp -> prev = newNode;
     ++m_length;

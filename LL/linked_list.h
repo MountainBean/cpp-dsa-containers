@@ -1,9 +1,14 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
-/* Linked List (Class Template)
- * Samuel Drew ~ 2025 
+/* Sam Drew ~ 2025
+ * Doubly Linked List implementation in C++
  * ---
- *  This is a simple implementation of a Linked List.
+ *  This is a simple implementation of a Linked List. Written by me, 
+ *  for my own edification in data structures and algorithms and C++.
+ *
+ *  WARNING: Do not use this library in projects. Instead use the standard C++
+ *  std::forward_list.
+ *
  *  Class templating is used to allow the creation of Linked Lists of any 
  *  object type. This version uses CTAD (Class Type Argument Deduction) 
  *  and doesn't provide deduction guides so will only compile with C++20 or
@@ -12,7 +17,23 @@
 
 #include <iostream>
 
-//  Member function implementations can be found below the class declaration
+/* Linked List template class.
+ *  Holds a single object type in a linked list of one or more objects
+ *  (homogenous).
+ *  Initialise with an object to create the first node of the list.
+ *  Use the included member functions to add to, remove from and search the 
+ *  list.
+ *  Member function implementations can be found below the class declaration.
+ *  Example:
+ *      LinkedList myList {3};          // myList: [3]
+ *      myList.append(4);               // myList: [3, 4]
+ *      myList.prepend(2);              // myList: [2, 3, 4]
+ *      myList.set(0, 1);               // myList: [1, 3, 4]
+ *
+ *  NOTE: This is already implemented in the standard C++ library as the 
+ *  std::forward_list container. Prefer to use the standard container for all 
+ *  collaborative work. 
+ */
 template <typename T>
 class LinkedList {
 public:
