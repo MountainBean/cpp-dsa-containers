@@ -6,7 +6,7 @@ int main() {
 
 using namespace std::string_literals;
 
-    LinkedList myStringList { "first_string"s };
+    sjd::LinkedList myStringList { "first_string"s };
     myStringList.append("another"s);
     myStringList.append("yet another"s);
     myStringList.prepend("first_first string"s);
@@ -15,7 +15,7 @@ using namespace std::string_literals;
 
     std::cout << "\n";
     std::cout << "\n";
-    LinkedList myIntList { 12 };
+    sjd::LinkedList myIntList { 12 };
     myIntList.append(13);
     myIntList.append(14);
     myIntList.prepend(11);

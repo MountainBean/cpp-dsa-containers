@@ -6,7 +6,7 @@ int main() {
 
 using namespace std::string_literals;
 
-    DoublyLinkedList myStringList { "first_string"s };
+    sjd::DoublyLinkedList myStringList { "first_string"s };
     myStringList.append("another"s);
     myStringList.append("yet another"s);
     myStringList.append("more"s);
@@ -37,7 +37,7 @@ using namespace std::string_literals;
 
     std::cout << "\n";
     std::cout << "\n";
-    DoublyLinkedList myIntList { 12 };
+    sjd::DoublyLinkedList myIntList { 12 };
     myIntList.append(13);
     myIntList.append(14);
     myIntList.prepend(11);
