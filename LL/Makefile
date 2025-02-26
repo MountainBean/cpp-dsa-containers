@@ -2,7 +2,7 @@ CC = clang++
 
 ARGS = -std=c++20 -pedantic-errors -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -g
 
-all: clean ll lld stack
+all: clean ll lld stack queue
 
 ll: test_linked_list.cpp
 	$(CC) $^ $(ARGS) -o "$@"
@@ -13,5 +13,8 @@ lld: test_doubly_linked_list.cpp
 stack: test_stack.cpp
 	$(CC) $^ $(ARGS) -o "$@"
 
+queue: test_queue.cpp
+	$(CC) $^ $(ARGS) -o "$@"
+
 clean:
-	rm -f ll lld stack
+	rm -f ll lld stack queue

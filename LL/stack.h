@@ -51,11 +51,11 @@ public:
 
     // accessors
     Node* peek() { return m_top; }
-    int getHeight() { return m_height; }
+    int length() { return m_height; }
 
     void printStack();
 
-    bool push(T value);
+    bool push(const T& value);
 
     Node* pop();
 
@@ -66,8 +66,8 @@ private:
 
 template <typename T>
 Stack<T>::Stack(const T& value)
-: m_top { new Node {value}}
-, m_height {1}
+    : m_top { new Node {value}}
+    , m_height {1}
 {
 }
 
@@ -91,7 +91,7 @@ void Stack<T>::printStack() {
 }
 
 template <typename T>
-bool Stack<T>::push(T value) {
+bool Stack<T>::push(const T& value) {
     Node* newNode {new Node {value, m_top}};
     m_top = newNode;
     ++m_height;
