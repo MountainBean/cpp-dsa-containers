@@ -28,10 +28,10 @@
  *      DoublyLinkedList myList {3};    // myList: [3]
  *      myList.append(4);               // myList: [3, 4]
  *      myList.prepend(2);              // myList: [2, 3, 4]
- *      myList.set(0, 1);               // myList: [1, 3, 4]
+ *      myList.set(1, 1);               // myList: [2, 1, 4]
  *
- *  NOTE: This is already implemented in the standard C++ library as the 
- *  std::list container. Prefer to use the standard container for all 
+ *  NOTE: A Class like this is already implemented in the standard C++ library 
+ *  as the std::list container. Prefer to use the standard container for all 
  *  collaborative work. 
  */
 template <typename T>
@@ -216,8 +216,11 @@ bool DoublyLinkedList<T>::setValue(int index, const T& value){
         return false;
     }
     Node* temp {get(index)};
-    temp -> value = value;
-    return true;
+    if ( temp ) {
+        temp -> value = value;
+        return true;
+    }
+    return false;
 }
 
 template <typename T>
@@ -232,16 +235,27 @@ bool DoublyLinkedList<T>::insert(int index, const T& value){
         return append(value);
     }
     Node* temp {get(index)};
-    Node* newNode {new Node {value, temp, temp -> prev}};
-    temp -> prev -> next = newNode;
-    temp -> prev = newNode;
-    ++m_length;
-    return true;
+    if ( temp ) {
+        Node* newNode {new Node {value, temp, temp -> prev}};
+        temp -> prev -> next = newNode;
+        temp -> prev = newNode;
+        ++m_length;
+        return true;
+    }
+    return false;
 }
 
 template <typename T>
 DoublyLinkedList<T>::Node* DoublyLinkedList<T>::remove(int index){
-    std::cout << "Not implemented\n";
+    Node* temp {get(index)};
+    if ( temp != nullptr ) {
+        temp -> prev -> next = temp -> next;
+        temp -> next -> prev = temp -> prev;
+        temp -> prev = nullptr;
+        temp -> next = nullptr;
+        --m_length;
+    }
+    return temp;
 }
 
 template <typename T>
