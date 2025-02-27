@@ -17,6 +17,7 @@
  */
 
 #include <iostream>
+#include <new>
 
 namespace sjd {
 
@@ -47,10 +48,14 @@ class Queue {
 public:
 
     Queue(const T& value)
-        : m_head {new Node {value}}
+        : m_head {new (std::nothrow) Node {value}}
         , m_tail {m_head}
         , m_length {1}
     {
+        if (!m_head) {
+            m_length = 0;
+            std::cout << "Could not allocate memory!\n";
+        }
     }
 
     ~Queue() {
@@ -72,6 +77,37 @@ public:
             std::cout << temp -> value << "\n";
             temp = temp -> next;
         }
+    }
+
+    bool enqueue(const T& value) {
+        Node* newNode {new (std::nothrow) Node {value}};
+        if (!newNode) {
+            std::cout << "Could not allocate memory!\n";
+            return false;
+        }
+        if (m_length == 0) {
+            m_head = newNode;
+            m_tail = newNode;
+        } else {
+            m_tail -> next = newNode;
+            m_tail = newNode;
+        }
+        ++m_length;
+        return true;
+    }
+
+    Node* dequeue() {
+        if (m_length == 0) {
+            return nullptr;
+        }
+        Node* temp {m_head};
+        if (m_length == 1) {
+            m_tail = nullptr;
+        }
+        m_head = m_head -> next;
+        temp -> next = nullptr;
+        --m_length;
+        return temp;
     }
 
 private:

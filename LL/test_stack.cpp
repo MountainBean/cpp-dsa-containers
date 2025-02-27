@@ -1,7 +1,7 @@
 #include <string>
 #include "stack.h"
 
-int main(void) {
+int main() {
 
     using namespace std::string_literals;
     sjd::Stack myStringStack {"Gilbert"s};
