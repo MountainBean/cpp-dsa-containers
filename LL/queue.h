@@ -47,73 +47,91 @@ class Queue {
 
 public:
 
-    Queue(const T& value)
-        : m_head {new (std::nothrow) Node {value}}
-        , m_tail {m_head}
-        , m_length {1}
-    {
-        if (!m_head) {
-            m_length = 0;
-            std::cout << "Could not allocate memory!\n";
-        }
-    }
+    // constructor + destructor
+    Queue(const T& value);
+    ~Queue();
 
-    ~Queue() {
-        Node* temp {m_head};
-        while (temp) {
-            temp = temp -> next;
-            delete m_head;
-            m_head = temp;
-        }
-    }
-
+    // accessors
     Node* begin() { return m_head; }
     Node* end() { return m_tail; }
     int length() { return m_length; }
 
-    void printQueue() {
-        Node* temp {m_head};
-        while (temp) {
-            std::cout << temp -> value << "\n";
-            temp = temp -> next;
-        }
-    }
+    void printQueue();
 
-    bool enqueue(const T& value) {
-        Node* newNode {new (std::nothrow) Node {value}};
-        if (!newNode) {
-            std::cout << "Could not allocate memory!\n";
-            return false;
-        }
-        if (m_length == 0) {
-            m_head = newNode;
-            m_tail = newNode;
-        } else {
-            m_tail -> next = newNode;
-            m_tail = newNode;
-        }
-        ++m_length;
-        return true;
-    }
+    bool enqueue(const T& value);
 
-    Node* dequeue() {
-        if (m_length == 0) {
-            return nullptr;
-        }
-        Node* temp {m_head};
-        if (m_length == 1) {
-            m_tail = nullptr;
-        }
-        m_head = m_head -> next;
-        temp -> next = nullptr;
-        --m_length;
-        return temp;
-    }
+    Node* dequeue();
 
 private:
     Node* m_head {nullptr};
     Node* m_tail {nullptr};
     int m_length {};
 };
+
+template <typename T>
+Queue<T>::Queue(const T& value)
+    : m_head {new (std::nothrow) Node {value}}
+    , m_tail {m_head}
+    , m_length {1}
+{
+    if (!m_head) {
+        m_length = 0;
+        std::cout << "Could not allocate memory!\n";
+    }
+}
+
+template <typename T>
+Queue<T>::~Queue() {
+    Node* temp {m_head};
+    while (temp) {
+        temp = temp -> next;
+        delete m_head;
+        m_head = temp;
+    }
+}
+
+template <typename T>
+void Queue<T>::printQueue() {
+    Node* temp {m_head};
+    while (temp) {
+        std::cout << temp -> value << "\n";
+        temp = temp -> next;
+    }
+}
+
+template <typename T>
+bool Queue<T>::enqueue(const T& value) {
+    Node* newNode {new (std::nothrow) Node {value}};
+    if (!newNode) {
+        std::cout << "Could not allocate memory!\n";
+        return false;
+    }
+    if (m_length == 0) {
+        m_head = newNode;
+        m_tail = newNode;
+    } else {
+        m_tail -> next = newNode;
+        m_tail = newNode;
+    }
+    ++m_length;
+    return true;
+}
+
+template <typename T>
+Queue<T>::Node* Queue<T>::dequeue() {
+    if (m_length == 0) {
+        return nullptr;
+    }
+    Node* temp {m_head};
+    if (m_length == 1) {
+        m_tail = nullptr;
+    }
+    m_head = m_head -> next;
+    temp -> next = nullptr;
+    --m_length;
+    return temp;
+}
+
+
 } // end namespace sjd
 #endif

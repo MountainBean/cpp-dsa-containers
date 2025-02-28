@@ -50,7 +50,7 @@ public:
     ~Stack();
 
     // accessors
-    Node* peek() { return m_top; }
+    Node* top() { return m_top; }
     int length() { return m_height; }
 
     void printStack();
