@@ -31,7 +31,7 @@ namespace sjd {
  *  Example:
  *      sjd::Queue myQueue {3};     // myList: [3]
  *      myQueue.enqueue(4);         // myList: [3, 4]
- *      myQueue.pop(2);             // myList: [4]
+ *      myQueue.dequeue(2);         // myList: [4]
  *
  *  NOTE: A Class like this is already implemented in the standard C++ library 
  *  as the std::list container. Prefer to use the standard container for all 
@@ -51,6 +51,10 @@ public:
     Queue(const T& value);
     ~Queue();
 
+    // Copy constructor
+    void deepCopy(const Queue& source);
+    Queue(const Queue& source) { deepCopy(source); }
+
     // accessors
     Node* begin() { return m_head; }
     Node* end() { return m_tail; }
@@ -61,6 +65,8 @@ public:
     bool enqueue(const T& value);
 
     Node* dequeue();
+
+    Queue& operator=(const Queue& source);
 
 private:
     Node* m_head {nullptr};
@@ -87,6 +93,32 @@ Queue<T>::~Queue() {
         temp = temp -> next;
         delete m_head;
         m_head = temp;
+    }
+}
+
+template <typename T>
+void Queue<T>::deepCopy(const Queue& source){
+
+    delete m_head;
+    delete m_tail;
+
+    m_length = source.m_length;
+
+    if (source.m_head) {
+
+        m_head = new Node{source.m_head -> value};
+        m_tail = m_head;
+        Node* sourceTemp {source.m_head -> next};
+
+        while (sourceTemp) {
+            m_tail -> next = new Node {sourceTemp -> value};
+            sourceTemp = sourceTemp -> next;
+            m_tail = m_tail -> next;
+        }
+    }
+    else {
+        m_head = nullptr;
+        m_tail = nullptr;
     }
 }
 
@@ -130,6 +162,14 @@ Queue<T>::Node* Queue<T>::dequeue() {
     temp -> next = nullptr;
     --m_length;
     return temp;
+}
+
+template <typename T>
+Queue<T>& Queue<T>::operator=(const Queue& source){
+    if (this != &source) {
+        deepCopy(source);
+    }
+    return *this;
 }
 
 

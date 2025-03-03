@@ -20,9 +20,9 @@
 /* Stack template class.
  *  Holds a single object type in a stack of one or more objects
  *  (homogenous).
- *  Initialise with an object to create the first node of the list.
+ *  Initialise with an object to create the first node of the stack.
  *  Use the included member functions to add to, remove from and search the 
- *  list.
+ *  stack.
  *  Member function implementations can be found below the class declaration.
  *  Example:
  *      sjd::Stack myStack {3};     // myList: [3]
@@ -49,6 +49,10 @@ public:
     Stack(const T& value);
     ~Stack();
 
+    // Copy constructor
+    void deepCopy(const Stack& source);
+    Stack(const Stack& source) { deepCopy(source); }
+
     // accessors
     Node* top() { return m_top; }
     int length() { return m_height; }
@@ -58,6 +62,8 @@ public:
     bool push(const T& value);
 
     Node* pop();
+
+    Stack& operator=(const Stack& source);
 
 private:
     Node* m_top {nullptr};
@@ -78,6 +84,30 @@ Stack<T>::~Stack() {
         temp = temp -> next;
         delete m_top;
         m_top = temp;
+    }
+}
+
+template <typename T>
+void Stack<T>::deepCopy(const Stack& source){
+
+    delete m_top;
+
+    m_height = source.m_height;
+
+    if (source.m_top) {
+
+        m_top = new Node{source.m_top -> value};
+        Node* temp {m_top};
+        Node* sourceTemp {source.m_top -> next};
+
+        while (sourceTemp) {
+            temp -> next = new Node {sourceTemp -> value};
+            sourceTemp = sourceTemp -> next;
+            temp = temp -> next;
+        }
+    }
+    else {
+        m_top = nullptr;
     }
 }
 
@@ -105,6 +135,14 @@ Stack<T>::Node* Stack<T>::pop() {
     temp -> next = nullptr;
     --m_height;
     return temp;
+}
+
+template <typename T>
+Stack<T>& Stack<T>::operator=(const Stack& source){
+    if (this != &source) {
+        deepCopy(source);
+    }
+    return *this;
 }
 } // end namespace sjd
 #endif

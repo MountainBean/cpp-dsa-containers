@@ -57,6 +57,10 @@ public:
     explicit DoublyLinkedList(const T& value);
     ~DoublyLinkedList();
 
+    // Copy constructor
+    void deepCopy(const DoublyLinkedList& source);
+    DoublyLinkedList(const DoublyLinkedList& source) { deepCopy(source); }
+
     void printList() const;
 
     bool append(const T& value);
@@ -80,6 +84,8 @@ public:
     bool reverse();
 
     bool isPalindrome();
+
+    DoublyLinkedList& operator=(const DoublyLinkedList& source);
 
 private:
 
@@ -108,6 +114,32 @@ DoublyLinkedList<T>::~DoublyLinkedList() {
         m_head = m_head->next;
         delete temp;
         temp = m_head;
+    }
+}
+
+template <typename T>
+void DoublyLinkedList<T>::deepCopy(const DoublyLinkedList& source){
+
+    delete m_head;
+    delete m_tail;
+
+    m_length = source.m_length;
+
+    if (source.m_head) {
+
+        m_head = new Node{source.m_head -> value};
+        m_tail = m_head;
+        Node* sourceTemp {source.m_head -> next};
+
+        while (sourceTemp) {
+            m_tail -> next = new Node {sourceTemp -> value, nullptr, m_tail};
+            sourceTemp = sourceTemp -> next;
+            m_tail = m_tail -> next;
+        }
+    }
+    else {
+        m_head = nullptr;
+        m_tail = nullptr;
     }
 }
 
@@ -290,5 +322,14 @@ template <typename T>
 bool DoublyLinkedList<T>::isPalindrome(){
     std::cout << "Not implemented\n";
 }
+
+template <typename T>
+DoublyLinkedList<T>& DoublyLinkedList<T>::operator=(const DoublyLinkedList& source){
+    if (this != &source) {
+        deepCopy(source);
+    }
+    return *this;
+}
+
 }
 #endif
