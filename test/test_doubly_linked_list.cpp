@@ -1,6 +1,6 @@
 /*  quick test main.cpp to run tests on the libraries
  */
-#include "doubly_linked_list.h"
+#include "../LL/doubly_linked_list.h"
 
 int main() {
 

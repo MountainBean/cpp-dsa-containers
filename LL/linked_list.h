@@ -1,13 +1,13 @@
-#ifndef LINKEDLIST_H
-#define LINKEDLIST_H
+#ifndef LINKED_LIST_H
+#define LINKED_LIST_H
 /* Sam Drew ~ 2025
- * Doubly Linked List implementation in C++
+ * Linked List implementation in C++
  * ---
  *  This is a simple implementation of a Linked List. Written by me, 
  *  for my own edification in data structures and algorithms and C++.
  *
  *  WARNING: Do not use this library in projects. Instead use the standard C++
- *  std::forward_list.
+ *  std::list.
  *
  *  Class templating is used to allow the creation of Linked Lists of any 
  *  object type. This version uses CTAD (Class Type Argument Deduction) 
@@ -18,8 +18,7 @@
 #include <iostream>
 
 /* Linked List template class.
- *  Holds a single object type in a linked list of one or more objects
- *  (homogenous).
+ *  
  *  Initialise with an object to create the first node of the list.
  *  Use the included member functions to add to, remove from and search the 
  *  list.
@@ -52,9 +51,13 @@ public:
     Node* end() const { return m_tail; }
     int length() const { return m_length; }
 
-    // constructor & destructor
+    // constructors & destructor
     explicit LinkedList(const T& value);
     ~LinkedList();
+
+    // Copy constructor
+    void deepCopy(const LinkedList& source);
+    LinkedList(const LinkedList& source) { deepCopy(source); }
 
     void printList() const;
 
@@ -77,6 +80,8 @@ public:
     void reverse();
 
     Node* middle();
+
+    LinkedList& operator=(const LinkedList& source);
 
 private:
 
@@ -111,6 +116,33 @@ LinkedList<T>::~LinkedList(){
         temp = m_head;
     }
 }
+
+template <typename T>
+void LinkedList<T>::deepCopy(const LinkedList& source){
+
+    delete m_head;
+    delete m_tail;
+
+    m_length = source.m_length;
+
+    if (source.m_head) {
+
+        m_head = new Node{source.m_head -> value};
+        m_tail = m_head;
+        Node* sourceTemp {source.m_head -> next};
+
+        while (sourceTemp) {
+            m_tail -> next = new Node {sourceTemp -> value};
+            sourceTemp = sourceTemp -> next;
+            m_tail = m_tail -> next;
+        }
+    }
+    else {
+        m_head = nullptr;
+        m_tail = nullptr;
+    }
+}
+
 
 /* prints the linked list items. One item per line.
  * O(n). This method iterates through each member of of the list making it O(n) 
@@ -304,5 +336,14 @@ LinkedList<T>::Node* LinkedList<T>::middle() {
     }
     return tortoise;
 }
+
+template <typename T>
+LinkedList<T>& LinkedList<T>::operator=(const LinkedList& source){
+    if (this != &source) {
+        deepCopy(source);
+    }
+    return *this;
+}
+
 } // end namespace sjd
 #endif

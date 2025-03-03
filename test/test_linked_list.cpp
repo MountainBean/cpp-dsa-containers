@@ -1,6 +1,6 @@
 /*  quick test main.cpp to run tests on the libraries
  */
-#include "linked_list.h"
+#include "../LL/linked_list.h"
 
 int main() {
 
@@ -11,15 +11,16 @@ using namespace std::string_literals;
     myStringList.append("yet another"s);
     myStringList.prepend("first_first string"s);
     std::cout << "\n";
+    std::cout << "myStringList: ";
     myStringList.printList();
+    
+    std::cout << "\n";
+    std::cout << "\n";
+    std::cout << "myStringList addr: " << &myStringList << "\n";
 
-    std::cout << "\n";
-    std::cout << "\n";
-    sjd::LinkedList myIntList { 12 };
-    myIntList.append(13);
-    myIntList.append(14);
-    myIntList.prepend(11);
+    sjd::LinkedList copyStringList {myStringList};
 
-    myIntList.printList();
-    std::cout << "\n";
+    std::cout << "copyStringList: ";
+    copyStringList.printList();
+    std::cout << "copyStringList addr: " << &copyStringList << "\n";
 }

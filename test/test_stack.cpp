@@ -1,5 +1,5 @@
 #include <string>
-#include "stack.h"
+#include "../LL/stack.h"
 
 int main() {
 
