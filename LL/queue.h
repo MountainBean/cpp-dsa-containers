@@ -48,7 +48,7 @@ class Queue {
 public:
 
     // constructor + destructor
-    Queue(const T& value);
+    Queue();
     ~Queue();
 
     // Copy constructor
@@ -75,15 +75,11 @@ private:
 };
 
 template <typename T>
-Queue<T>::Queue(const T& value)
-    : m_head {new (std::nothrow) Node {value}}
-    , m_tail {m_head}
-    , m_length {1}
+Queue<T>::Queue()
+    : m_head {nullptr}
+    , m_tail {nullptr}
+    , m_length {0}
 {
-    if (!m_head) {
-        m_length = 0;
-        std::cout << "Could not allocate memory!\n";
-    }
 }
 
 template <typename T>

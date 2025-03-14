@@ -2,7 +2,7 @@ CC = clang++
 
 ARGS = -std=c++20 -pedantic-errors -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -g
 
-all: clean ll lld stack queue smartll
+all: clean ll lld stack queue smartll bst
 
 ll: test_linked_list.cpp
 	$(CC) $^ $(ARGS) -o "$@"
@@ -19,5 +19,8 @@ queue: test_queue.cpp
 smartll: test_smart_linked_list.cpp
 	$(CC) $^ $(ARGS) -o "$@"
 
+bst: test_bst.cpp
+	$(CC) $^ $(ARGS) -o "$@"
+
 clean:
-	rm -f ll lld stack queue smartll
+	rm -f ll lld stack queue smartll bst

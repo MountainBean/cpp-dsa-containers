@@ -4,7 +4,7 @@ int main() {
 
     using namespace std::string_literals;
 
-    sjd::Queue myStringQueue {"Somethings up"s};
+    sjd::Queue<std::string> myStringQueue {};
     myStringQueue.enqueue("Vermillion"s);
     myStringQueue.enqueue("rose-quartz"s);
     myStringQueue.enqueue("Purple"s);
@@ -19,7 +19,7 @@ int main() {
     myStringQueue.printQueue();
     std::cout << "\n";
 
-    sjd::Queue myIntQueue {60};
+    sjd::Queue<int> myIntQueue {};
     myIntQueue.printQueue();
     std::cout << "\n";
 }
