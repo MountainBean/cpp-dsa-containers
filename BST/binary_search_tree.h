@@ -84,6 +84,37 @@ public:
         }
     }
 
+    T min(std::shared_ptr<Node> currNode) {
+        while (currNode -> left){
+            currNode = currNode -> left;
+        }
+        return currNode -> value;
+    }
+
+    std::shared_ptr<Node> __r_removeNode(std::shared_ptr<Node> currNode, T value){
+        if (!currNode) {return nullptr;}
+        else if (value < currNode -> value) {
+            currNode -> left = __r_removeNode(currNode -> left, value);
+        }
+        else if (value > currNode -> value) {
+            currNode -> right = __r_removeNode(currNode -> right, value);
+        }
+        else {
+            if (!(currNode -> left) && !(currNode -> right)) {return nullptr;}
+            else if (!(currNode -> right)) {return currNode -> left;}
+            else if (!(currNode -> left)) {return currNode -> right;}
+            else {
+                currNode -> value = min(currNode -> right);
+                currNode -> right = __r_removeNode(currNode -> right, currNode -> value);
+            }
+        }
+        return currNode;
+    }
+
+    void remove(T value){
+        m_root = __r_removeNode(m_root, value);
+    }
+
     /* Performs a breadth-first search using a queue to keep track of the order
      * of the Nodes.
      */

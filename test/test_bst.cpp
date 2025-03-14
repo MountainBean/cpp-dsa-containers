@@ -23,6 +23,10 @@ int main() {
     myTree.insert(16);
     myTree.insert(140);
     myTree.insert(42);
+    myTree.insert(31);
+    myTree.insert(102);
+    myTree.insert(132);
+    myTree.insert(42);
     myTree.insert(71);
     myTree.insert(2);
     
@@ -37,6 +41,19 @@ int main() {
         std::cout << element << " ";
     }
     std::cout << "]\n";
+
+    std::cout << "remove 94.\n";
+    myTree.remove(94);
+    std::cout << myTree << "\n";
+    std::cout << "remove 42.\n";
+    myTree.remove(42);
+    std::cout << myTree << "\n";
+    std::cout << "remove 71.\n";
+    myTree.remove(71);
+    std::cout << myTree << "\n";
+    std::cout << "remove 2.\n";
+    myTree.remove(2);
+    std::cout << myTree << "\n";
 
     std::cout << "All tests succeeded.\n";
 }
